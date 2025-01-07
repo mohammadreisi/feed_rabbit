@@ -2,7 +2,6 @@ package com.example.savethebird.ui.views.viewgroup
 
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -18,7 +17,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.paint
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
@@ -26,8 +24,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import com.example.savethebird.R
+import com.example.savethebird.logics.CarrotLogic
 import com.example.savethebird.logics.RabbitLogic
-import com.example.savethebird.logics.Rabbit_WIDTH
+import com.example.savethebird.logics.RABBIT_WIDTH
 import com.example.savethebird.models.Line
 import com.example.savethebird.models.Rabbit
 import com.example.savethebird.ui.views.element.LineView
@@ -40,6 +39,9 @@ fun GameRootView(modifier: Modifier = Modifier) {
     val configuration = LocalConfiguration.current
     val screenHeight = configuration.screenHeightDp
     val screenWidth = configuration.screenWidthDp
+
+    val carrotLogic = remember {CarrotLogic()}
+    val newCarrot = carrotLogic.createCarrot.collectAsState()
 
     val rabbitObject =
         remember {
@@ -142,15 +144,15 @@ fun GameRootView(modifier: Modifier = Modifier) {
                             .toInt()
                     )
                 }
-                .height(Rabbit_WIDTH.dp)
-                .width(Rabbit_WIDTH.dp)
+                .height(RABBIT_WIDTH.dp)
+                .width(RABBIT_WIDTH.dp)
         )
 
     }
 }
 
 fun getLineCenter(left: Int, right: Int): Int {
-    return ((left + right) / 2) - ((Rabbit_WIDTH / 2))
+    return ((left + right) / 2) - ((RABBIT_WIDTH / 2))
 }
 
 @Preview

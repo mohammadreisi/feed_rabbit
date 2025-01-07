@@ -1,6 +1,6 @@
 package com.example.savethebird.models
 
-import com.example.savethebird.logics.Rabbit_WIDTH
+import com.example.savethebird.logics.RABBIT_WIDTH
 
 class Rabbit {
     private var leftX: Int = 0
@@ -8,7 +8,7 @@ class Rabbit {
 
     fun setLeftX(leftX: Int) {
         this.leftX = leftX
-        this.rightX = leftX + Rabbit_WIDTH
+        this.rightX = leftX + RABBIT_WIDTH
     }
 
     fun getRightX(): Int {
