@@ -57,8 +57,12 @@ fun MainActivityView(
                 val rabbitElementName = navBackStackEntry.arguments?.getString("rabbit_element_name") ?: ""
                 val musicIconElementName = navBackStackEntry.arguments?.getString("music_icon_element_name") ?: ""
                 GameRootView(
-                    Modifier
-                        .fillMaxSize(),
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .paint(
+                            painterResource(R.drawable.ms2),
+                            contentScale = ContentScale.FillBounds
+                        ),
                     rabbitSharedElementName = rabbitElementName,
                     musicIconSharedElementName = musicIconElementName,
                     mainViewModel = mainViewModel,

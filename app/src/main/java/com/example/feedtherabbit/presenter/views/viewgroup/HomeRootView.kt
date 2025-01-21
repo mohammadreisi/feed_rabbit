@@ -31,7 +31,7 @@ fun HomeRootView(
     mainViewModel: MainViewModel?,
     sharedTransitionScope: SharedTransitionScope,
     animatedContentScope: AnimatedContentScope,
-    onStartClicked: (rabbit: String, musicIcon:String) -> Unit
+    onStartClicked: (rabbit: String, musicIcon: String) -> Unit
 ) {
     with(sharedTransitionScope) {
 

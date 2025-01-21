@@ -80,15 +80,10 @@ fun GameRootView(
 
         Box(
             modifier = modifier
-                .fillMaxSize()
-                .background(Color.White)
         ) {
 
             Row(
-                modifier = Modifier.paint(
-                    painterResource(R.drawable.ms2),
-                    contentScale = ContentScale.FillBounds
-                )
+                modifier = Modifier.fillMaxSize()
             ) {
                 LineView(
                     modifier = Modifier
