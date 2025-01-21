@@ -8,6 +8,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -172,7 +173,7 @@ fun GameRootView(
 
             Image(
                 modifier = Modifier
-                    .padding(32.dp)
+                    .padding(36.dp)
                     .align(Alignment.TopStart)
                     .sharedElement(
                         state = rememberSharedContentState(musicIconSharedElementName),
@@ -180,7 +181,9 @@ fun GameRootView(
                         boundsTransform = { _, _ ->
                             tween(durationMillis = 1000, delayMillis = 200)
                         })
-                    .clickable {
+                    .clickable(
+                        indication = null,
+                        interactionSource = remember { MutableInteractionSource() })  {
                         if (playingMusicState?.value == true) {
                             mainViewModel.stopMusic()
                         } else {
@@ -190,7 +193,7 @@ fun GameRootView(
                 painter = painterResource(
                     if (playingMusicState?.value == true) R.drawable.stop_png else R.drawable.play_png
                 ),
-                contentDescription = "start"
+                contentDescription = "music"
             )
 
         }
