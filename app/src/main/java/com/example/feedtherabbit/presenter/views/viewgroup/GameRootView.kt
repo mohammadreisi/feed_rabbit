@@ -5,18 +5,24 @@ import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.paint
 import androidx.compose.ui.graphics.Color
@@ -31,6 +37,7 @@ import com.example.feedtherabbit.business.model.Rabbit
 import com.example.feedtherabbit.logic.CarrotLogic
 import com.example.feedtherabbit.logic.RABBIT_WIDTH
 import com.example.feedtherabbit.logic.RabbitLogic
+import com.example.feedtherabbit.presenter.view_model.MainViewModel
 import com.example.feedtherabbit.presenter.views.element.LineView
 import com.example.feedtherabbit.presenter.views.element.RabbitView
 
@@ -39,10 +46,11 @@ import com.example.feedtherabbit.presenter.views.element.RabbitView
 @Composable
 fun GameRootView(
     modifier: Modifier = Modifier,
-    shareElementName: String,
+    rabbitSharedElementName: String,
+    musicIconSharedElementName: String,
+    mainViewModel: MainViewModel?,
     sharedTransitionScope: SharedTransitionScope,
     animatedContentScope: AnimatedContentScope,
-    onFinishClicked: () -> Unit
 ) {
 
     with(sharedTransitionScope) {
@@ -52,6 +60,7 @@ fun GameRootView(
 
         val carrotLogic = remember { CarrotLogic() }
         val newCarrot = carrotLogic.createCarrot.collectAsState()
+        val playingMusicState = mainViewModel?.musicPlayingState?.collectAsState()
 
         val rabbitObject =
             remember {
@@ -74,6 +83,7 @@ fun GameRootView(
                 .fillMaxSize()
                 .background(Color.White)
         ) {
+
             Row(
                 modifier = Modifier.paint(
                     painterResource(R.drawable.ms2),
@@ -157,12 +167,35 @@ fun GameRootView(
                     .height(RABBIT_WIDTH.dp)
                     .width(RABBIT_WIDTH.dp)
                     .sharedElement(
-                        state = rememberSharedContentState(shareElementName),
+                        state = rememberSharedContentState(rabbitSharedElementName),
                         animatedVisibilityScope = animatedContentScope,
                         boundsTransform = { _, _ ->
-                            tween(durationMillis = 1000)
+                            tween(durationMillis = 1000, delayMillis = 200)
                         }
                     )
+            )
+
+            Image(
+                modifier = Modifier
+                    .padding(32.dp)
+                    .align(Alignment.TopStart)
+                    .sharedElement(
+                        state = rememberSharedContentState(musicIconSharedElementName),
+                        animatedVisibilityScope = animatedContentScope,
+                        boundsTransform = { _, _ ->
+                            tween(durationMillis = 1000, delayMillis = 200)
+                        })
+                    .clickable {
+                        if (playingMusicState?.value == true) {
+                            mainViewModel.stopMusic()
+                        } else {
+                            mainViewModel?.playMusic()
+                        }
+                    },
+                painter = painterResource(
+                    if (playingMusicState?.value == true) R.drawable.stop_png else R.drawable.play_png
+                ),
+                contentDescription = "start"
             )
 
         }

@@ -7,15 +7,13 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import com.example.feedtherabbit.presenter.navigation.MainActivityView
 import com.example.feedtherabbit.presenter.theme.SaveTheBirdTheme
-import com.example.feedtherabbit.presenter.view_model.GameViewModel
-import com.example.feedtherabbit.presenter.view_model.HomeViewModel
+import com.example.feedtherabbit.presenter.view_model.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-    private val homeViewModel: HomeViewModel by viewModels()
-    private val gameViewModel: GameViewModel by viewModels()
+    private val mainViewModel: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,8 +23,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             SaveTheBirdTheme {
                 MainActivityView(
-                    homeViewModel = homeViewModel,
-                    gameViewModel = gameViewModel
+                    mainViewModel = mainViewModel
                 )
             }
         }
