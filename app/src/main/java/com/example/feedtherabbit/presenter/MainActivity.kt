@@ -1,4 +1,4 @@
-package com.example.feedtherabbit
+package com.example.feedtherabbit.presenter
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
