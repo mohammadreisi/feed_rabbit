@@ -4,6 +4,12 @@ import android.util.Log
 import androidx.compose.animation.AnimatedContentScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionScope
+import androidx.compose.animation.core.ArcAnimationSpec
+import androidx.compose.animation.core.DurationBasedAnimationSpec
+import androidx.compose.animation.core.InfiniteRepeatableSpec
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.StartOffset
+import androidx.compose.animation.core.StartOffsetType
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
@@ -29,9 +35,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.platform.ValueElement
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import com.example.feedtherabbit.R
 import com.example.feedtherabbit.business.model.Carrot
@@ -167,16 +171,10 @@ fun GameRootView(
 
             RabbitView(
                 modifier = Modifier
-                    .offset {
-                        IntOffset(
-                            x = rabbitX
-                                .toPx()
-                                .toInt(),
-                            y = (screenHeight * 0.70).dp
-                                .toPx()
-                                .toInt()
-                        )
-                    }
+                    .offset(
+                        x = rabbitX,
+                        y = (screenHeight * 0.70).dp
+                    )
                     .height(RABBIT_WIDTH.dp)
                     .width(RABBIT_WIDTH.dp)
                     .sharedElement(
@@ -215,14 +213,10 @@ fun GameRootView(
 
             Image(
                 modifier = Modifier
-                    .offset {
-                        IntOffset(
-                            x = getCarrotLeftX(carrot?.value, screenWidth),
-                            y = carrotY
-                                .toPx()
-                                .toInt()
-                        )
-                    }
+                    .offset(
+                        x = getCarrotLeftX(carrot?.value, screenWidth).dp,
+                        y = carrotY
+                    )
                     .height(CARROT_HEIGHT.dp)
                     .width(CARROT_WIDTH.dp),
                 painter = painterResource(R.drawable.carrot_png),
@@ -232,7 +226,6 @@ fun GameRootView(
         }
     }
 }
-
 
 fun getCarrotLeftX(carrot: Carrot?, screenWidth: Int): Int {
     return when (carrot?.linePosition ?: -1) {

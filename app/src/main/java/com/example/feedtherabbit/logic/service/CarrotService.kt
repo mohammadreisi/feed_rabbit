@@ -35,7 +35,7 @@ class CarrotService {
                     linePosition = getRandomLine()
                 }
             }
-            delay(3000)
+            delay(100)
         }
     }
 
