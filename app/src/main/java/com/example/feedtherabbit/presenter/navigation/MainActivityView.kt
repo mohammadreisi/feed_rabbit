@@ -40,12 +40,12 @@ fun MainActivityView(
                     mainViewModel = mainViewModel,
                     sharedTransitionScope = this@SharedTransitionLayout,
                     animatedContentScope = this@composable
-                ) { rabbitElementName, musicIconElementName ->
-                    navController.navigate("${Destinations.Game.route}/$rabbitElementName/$musicIconElementName")
+                ) { rabbitElementName, musicIconElementName, characterNumber ->
+                    navController.navigate("${Destinations.Game.route}/$rabbitElementName/$musicIconElementName/$characterNumber")
                 }
             }
 
-            composable(route = "${Destinations.Game.route}/{rabbit_element_name}/{music_icon_element_name}",
+            composable(route = "${Destinations.Game.route}/{rabbit_element_name}/{music_icon_element_name}/{character_number}",
                 arguments = listOf(
                     navArgument("rabbit_element_name") {
                         type = NavType.StringType
@@ -56,6 +56,7 @@ fun MainActivityView(
                 )) { navBackStackEntry ->
                 val rabbitElementName = navBackStackEntry.arguments?.getString("rabbit_element_name") ?: ""
                 val musicIconElementName = navBackStackEntry.arguments?.getString("music_icon_element_name") ?: ""
+                val characterNumber = navBackStackEntry.arguments?.getString("character_number") ?: ""
                 GameRootView(
                     modifier = Modifier
                         .fillMaxSize()
@@ -67,7 +68,8 @@ fun MainActivityView(
                     musicIconSharedElementName = musicIconElementName,
                     mainViewModel = mainViewModel,
                     sharedTransitionScope = this@SharedTransitionLayout,
-                    animatedContentScope = this@composable
+                    animatedContentScope = this@composable,
+                    characterNumber = characterNumber.toInt()
                 )
             }
         }

@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
@@ -24,6 +25,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.feedtherabbit.R
 import com.example.feedtherabbit.presenter.view_model.MainViewModel
+import com.example.feedtherabbit.presenter.views.element.HomeRabbitView
 import com.example.feedtherabbit.presenter.views.element.RabbitView
 
 @OptIn(ExperimentalSharedTransitionApi::class)
@@ -33,10 +35,11 @@ fun HomeRootView(
     mainViewModel: MainViewModel?,
     sharedTransitionScope: SharedTransitionScope,
     animatedContentScope: AnimatedContentScope,
-    onStartClicked: (rabbit: String, musicIcon: String) -> Unit
+    onStartClicked: (rabbit: String, musicIcon: String, characterNumber: Int) -> Unit
 ) {
     with(sharedTransitionScope) {
 
+        val pagerState = rememberPagerState(initialPage = 0) { 2 }
         val playingMusicState = mainViewModel?.musicPlayingState?.collectAsState()
 
         Box(modifier = modifier) {
@@ -57,13 +60,13 @@ fun HomeRootView(
                         .clickable(
                             indication = null,
                             interactionSource = remember { MutableInteractionSource() }) {
-                            onStartClicked("rabbit", "music_icon")
+                            onStartClicked("rabbit", "music_icon", pagerState.currentPage)
                         },
                     painter = painterResource(R.drawable.start_png),
                     contentDescription = "start"
                 )
                 Spacer(Modifier.fillMaxHeight(0.1f))
-                RabbitView(
+                HomeRabbitView(
                     modifier = Modifier
                         .height(360.dp)
                         .width(360.dp)
@@ -73,7 +76,8 @@ fun HomeRootView(
                             boundsTransform = { _, _ ->
                                 tween(durationMillis = 1000, delayMillis = 200)
                             }
-                        )
+                        ),
+                    pagerState = pagerState
                 )
             }
 

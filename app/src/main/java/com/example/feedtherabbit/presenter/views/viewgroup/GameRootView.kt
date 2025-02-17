@@ -1,15 +1,8 @@
 package com.example.feedtherabbit.presenter.views.viewgroup
 
-import android.util.Log
 import androidx.compose.animation.AnimatedContentScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionScope
-import androidx.compose.animation.core.ArcAnimationSpec
-import androidx.compose.animation.core.DurationBasedAnimationSpec
-import androidx.compose.animation.core.InfiniteRepeatableSpec
-import androidx.compose.animation.core.RepeatMode
-import androidx.compose.animation.core.StartOffset
-import androidx.compose.animation.core.StartOffsetType
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
@@ -18,6 +11,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.absoluteOffset
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -55,6 +49,7 @@ fun GameRootView(
     modifier: Modifier = Modifier,
     rabbitSharedElementName: String,
     musicIconSharedElementName: String,
+    characterNumber: Int,
     mainViewModel: MainViewModel?,
     sharedTransitionScope: SharedTransitionScope,
     animatedContentScope: AnimatedContentScope,
@@ -95,10 +90,10 @@ fun GameRootView(
             label = "offset"
         )
 
-        val carrotY by animateDpAsState(
-            targetValue = carrot?.value?.YTop?.dp!!,
-            label = "offset"
-        )
+//        val carrotY by animateDpAsState(
+//            targetValue = carrot?.value?.YTop?.dp!!,
+//            label = "offset"
+//        )
 
         Box(
             modifier = modifier
@@ -173,7 +168,7 @@ fun GameRootView(
                 modifier = Modifier
                     .offset(
                         x = rabbitX,
-                        y = (screenHeight * 0.70).dp
+                        y = (screenHeight * 0.75).dp
                     )
                     .height(RABBIT_WIDTH.dp)
                     .width(RABBIT_WIDTH.dp)
@@ -183,7 +178,8 @@ fun GameRootView(
                         boundsTransform = { _, _ ->
                             tween(durationMillis = 1000, delayMillis = 200)
                         }
-                    )
+                    ),
+                characterNumber = characterNumber
             )
 
             Image(
@@ -213,9 +209,9 @@ fun GameRootView(
 
             Image(
                 modifier = Modifier
-                    .offset(
+                    .absoluteOffset(
                         x = getCarrotLeftX(carrot?.value, screenWidth).dp,
-                        y = carrotY
+                        y = carrot?.value?.YTop!!.dp
                     )
                     .height(CARROT_HEIGHT.dp)
                     .width(CARROT_WIDTH.dp),

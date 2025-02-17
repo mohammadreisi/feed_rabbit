@@ -14,11 +14,19 @@ import com.example.feedtherabbit.R
 
 
 @Composable
-fun RabbitView(modifier: Modifier = Modifier) {
+fun RabbitView(modifier: Modifier = Modifier, characterNumber: Int) {
 
     val preloaderLottieComposition by rememberLottieComposition(
         LottieCompositionSpec.RawRes(
-            R.raw.rabbit2
+            when (characterNumber) {
+                0 -> {
+                    R.raw.rabbit2
+                }
+
+                else -> {
+                    R.raw.rabbit
+                }
+            }
         )
     )
 
