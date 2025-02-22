@@ -16,7 +16,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -51,7 +50,7 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    private fun listenRabbitPosition()  {
+    private fun listenRabbitPosition() {
         viewModelScope.launch(Dispatchers.IO) {
             appRepository.listenRabbitPosition().collect { rabbit ->
                 _rabbitPosition.postValue(rabbit)

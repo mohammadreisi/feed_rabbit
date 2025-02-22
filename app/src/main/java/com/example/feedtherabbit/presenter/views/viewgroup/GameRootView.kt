@@ -1,5 +1,6 @@
 package com.example.feedtherabbit.presenter.views.viewgroup
 
+import android.util.Log
 import androidx.compose.animation.AnimatedContentScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionScope
@@ -39,8 +40,8 @@ import com.example.feedtherabbit.logic.CARROT_HEIGHT
 import com.example.feedtherabbit.logic.CARROT_WIDTH
 import com.example.feedtherabbit.logic.RABBIT_WIDTH
 import com.example.feedtherabbit.presenter.view_model.MainViewModel
+import com.example.feedtherabbit.presenter.views.element.CharacterView
 import com.example.feedtherabbit.presenter.views.element.LineView
-import com.example.feedtherabbit.presenter.views.element.RabbitView
 
 
 @OptIn(ExperimentalSharedTransitionApi::class)
@@ -89,11 +90,6 @@ fun GameRootView(
             targetValue = rabbit?.value?.getLeftX()?.dp!!,
             label = "offset"
         )
-
-//        val carrotY by animateDpAsState(
-//            targetValue = carrot?.value?.YTop?.dp!!,
-//            label = "offset"
-//        )
 
         Box(
             modifier = modifier
@@ -164,7 +160,7 @@ fun GameRootView(
                 ) { _, _ -> }
             }
 
-            RabbitView(
+            CharacterView(
                 modifier = Modifier
                     .offset(
                         x = rabbitX,
@@ -218,7 +214,6 @@ fun GameRootView(
                 painter = painterResource(R.drawable.carrot_png),
                 contentDescription = "carrot"
             )
-
         }
     }
 }

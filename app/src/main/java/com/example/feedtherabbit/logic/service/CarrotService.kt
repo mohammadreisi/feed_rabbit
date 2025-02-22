@@ -2,7 +2,6 @@ package com.example.feedtherabbit.logic.service
 
 import com.example.feedtherabbit.business.model.Carrot
 import com.example.feedtherabbit.logic.CARROT_HEIGHT
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -21,21 +20,22 @@ class CarrotService {
     suspend fun startCarrotFalling(screenHeight: Int) {
         isCarrotFalling = true
         val carrot =
-            Carrot(YTop = (CARROT_HEIGHT * -1), YBottom = 0, linePosition = getRandomLine())
+            Carrot(YTop = (CARROT_HEIGHT * -2), YBottom = CARROT_HEIGHT * -1, linePosition = getRandomLine())
+        delay(2000)
         while (isCarrotFalling) {
-            _carrotPosition.emit(carrot)
+            _carrotPosition.emit(carrot.copy())
             carrot.apply {
-                YTop += 10
-                YBottom += 10
+                YTop += 5
+                YBottom += 5
             }
             if (carrot.YTop > screenHeight) {
                 carrot.apply {
-                    YTop = (CARROT_HEIGHT * -1)
-                    YBottom = 0
+                    YTop = (CARROT_HEIGHT * -2)
+                    YBottom = CARROT_HEIGHT * -1
                     linePosition = getRandomLine()
                 }
             }
-            delay(100)
+            delay(50)
         }
     }
 

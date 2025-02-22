@@ -25,8 +25,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.feedtherabbit.R
 import com.example.feedtherabbit.presenter.view_model.MainViewModel
-import com.example.feedtherabbit.presenter.views.element.HomeRabbitView
-import com.example.feedtherabbit.presenter.views.element.RabbitView
+import com.example.feedtherabbit.presenter.views.element.HomeCharacterView
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
@@ -66,7 +65,8 @@ fun HomeRootView(
                     contentDescription = "start"
                 )
                 Spacer(Modifier.fillMaxHeight(0.1f))
-                HomeRabbitView(
+
+                HomeCharacterView(
                     modifier = Modifier
                         .height(360.dp)
                         .width(360.dp)

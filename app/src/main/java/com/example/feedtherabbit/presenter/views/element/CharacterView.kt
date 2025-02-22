@@ -14,7 +14,7 @@ import com.example.feedtherabbit.R
 
 
 @Composable
-fun RabbitView(modifier: Modifier = Modifier, characterNumber: Int) {
+fun CharacterView(modifier: Modifier = Modifier, characterNumber: Int) {
 
     val preloaderLottieComposition by rememberLottieComposition(
         LottieCompositionSpec.RawRes(
